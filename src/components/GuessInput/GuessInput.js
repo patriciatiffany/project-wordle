@@ -1,4 +1,5 @@
 import React from "react";
+import { NUM_LETTERS } from "../../constants";
 
 function GuessInput({ addToHistory }) {
   const [inputVal, setInputVal] = React.useState("");
@@ -16,7 +17,7 @@ function GuessInput({ addToHistory }) {
           value={inputVal}
           id="guess-input"
           onChange={(e) => setInputVal(e.target.value.toUpperCase())}
-          pattern="\w{5,5}"
+          pattern={`\\w{${NUM_LETTERS},${NUM_LETTERS}}`}
         ></input>
       </form>
     </div>
