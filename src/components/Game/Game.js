@@ -1,5 +1,8 @@
 import React from 'react';
 
+import GuessInput from '../GuessInput';
+import GuessResults from '../GuessResults';
+
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
 
@@ -9,7 +12,18 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  return <>Put a game here!</>;
+  const [inputHistory, setInputHistory] = React.useState([]);
+  const addToHistory = (val) => {
+    const newVal = {
+      id: Date.now(),
+      value: val
+    }
+    setInputHistory([...inputHistory,newVal])
+  }
+  return <>
+    <GuessInput addToHistory={addToHistory}/>
+    <GuessResults results={inputHistory}/>
+  </>;
 }
 
 export default Game;
