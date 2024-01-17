@@ -2,7 +2,6 @@ import React from "react";
 
 import { NUM_OF_GUESSES_ALLOWED, NUM_LETTERS } from "../../constants";
 import { range } from "../../utils";
-import { checkGuess } from "../../game-helpers";
 
 function Guess({ guess }) {
   if (guess.length === 0) {
@@ -18,15 +17,38 @@ function Guess({ guess }) {
   }
 }
 
-function GuessResults({ results, answer }) {
+function GuessResults({ results, answer, gameStatus }) {
+  const gameOver =
+    gameStatus === "victory" || results.length === NUM_OF_GUESSES_ALLOWED;
+  // range(NUM_OF_GUESSES_ALLOWED) looks like: [0, 1, 2, 3, 4, 5]
   return (
-    <div className="guess-results">
-      {range(NUM_OF_GUESSES_ALLOWED).map((i) => ( // [0, 1, 2, 3, 4, 5]
-        <p className="guess" key={i}>
-          <Guess guess={results[i] ? checkGuess(results[i].value, answer) : []} />
-        </p>
-      ))}
-    </div>
+    <>
+      <div className="guess-results">
+        {range(NUM_OF_GUESSES_ALLOWED).map((i) => (
+          <p className="guess" key={i}>
+            <Guess guess={results[i] ? results[i].value : []} />
+          </p>
+        ))}
+      </div>
+      {gameOver && gameStatus === "victory" && (
+        <div className={`happy banner`}>
+          <p>
+            <strong>Congratulations!</strong> Got it in{" "}
+            <strong>
+              {results.length > 1 ? `${results.length} guesses` : "1 guess"}
+            </strong>
+            .
+          </p>
+        </div>
+      )}
+      {gameOver && gameStatus !== "victory" && (
+        <div className={`sad banner`}>
+          <p>
+            Sorry, the correct answer is <strong>{answer}</strong>.
+          </p>
+        </div>
+      )}
+    </>
   );
 }
 
