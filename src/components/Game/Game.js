@@ -2,6 +2,7 @@ import React from 'react';
 
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
+import ResultBanner from '../ResultBanner';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
@@ -33,26 +34,9 @@ function Game() {
     setInputHistory(newInputHistory)
   }
   return <>
-    <GuessInput addToHistory={addToHistory}/>
-    <GuessResults results={inputHistory} gameStatus={gameStatus} answer={answer}/>
-    {gameStatus === "victory" && (
-        <div className={`happy banner`}>
-          <p>
-            <strong>Congratulations!</strong> Got it in{" "}
-            <strong>
-              {inputHistory.length > 1 ? `${inputHistory.length} guesses` : "1 guess"}
-            </strong>
-            .
-          </p>
-        </div>
-      )}
-      {gameStatus === "loss" && (
-        <div className={`sad banner`}>
-          <p>
-            Sorry, the correct answer is <strong>{answer}</strong>.
-          </p>
-        </div>
-      )}
+    <GuessInput addToHistory={addToHistory} disabled={gameStatus === '' ? false : true}/>
+    <GuessResults results={inputHistory}/>
+    <ResultBanner gameStatus={gameStatus} answer={answer} numGuesses={inputHistory.length}/>
   </>;
 }
 
