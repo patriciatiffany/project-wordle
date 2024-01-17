@@ -22,7 +22,7 @@ function Game() {
   }
   return <>
     <GuessInput addToHistory={addToHistory}/>
-    <GuessResults results={inputHistory}/>
+    <GuessResults results={inputHistory} answer={answer}/>
   </>;
 }
 
