@@ -18,8 +18,6 @@ function Guess({ guess }) {
 }
 
 function GuessResults({ results, answer, gameStatus }) {
-  const gameOver =
-    gameStatus === "victory" || results.length === NUM_OF_GUESSES_ALLOWED;
   // range(NUM_OF_GUESSES_ALLOWED) looks like: [0, 1, 2, 3, 4, 5]
   return (
     <>
@@ -30,24 +28,6 @@ function GuessResults({ results, answer, gameStatus }) {
           </p>
         ))}
       </div>
-      {gameOver && gameStatus === "victory" && (
-        <div className={`happy banner`}>
-          <p>
-            <strong>Congratulations!</strong> Got it in{" "}
-            <strong>
-              {results.length > 1 ? `${results.length} guesses` : "1 guess"}
-            </strong>
-            .
-          </p>
-        </div>
-      )}
-      {gameOver && gameStatus !== "victory" && (
-        <div className={`sad banner`}>
-          <p>
-            Sorry, the correct answer is <strong>{answer}</strong>.
-          </p>
-        </div>
-      )}
     </>
   );
 }
